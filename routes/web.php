@@ -8,5 +8,6 @@ Route::prefix('admin')->group(function () {
         Route::get('create', [CategoriesController::class, 'create'])->name('admin.categories.create');
         Route::post('', [CategoriesController::class, 'store'])->name('admin.categories.store');
         Route::get('', [CategoriesController::class, 'all'])->name('admin.categories.all');
+        Route::delete('{category_id}/delete', [CategoriesController::class, 'delete'])->name('admin.categories.delete');
     });
 });
