@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Admin\Categories\StoreRequest;
 use App\Models\Category;
 use Illuminate\Http\Request;
 
@@ -13,11 +14,13 @@ class CategoriesController extends Controller
         return view('admin.categories.create');
     }
 
-    public function store(Request $request)
+    public function store(StoreRequest $request)
     {
+        $validatedData = $request->validated();
+
         $createdCategory = Category::create([
-            'title' => $request->title,
-            'slug' => $request->slug
+            'title' => $validatedData['title'],
+            'slug' => $validatedData['slug']
         ]);
 
         if (!$createdCategory) {

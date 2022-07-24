@@ -24,12 +24,7 @@
         <!-- Main content -->
         <div class="content">
             <div class="container-fluid">
-                @if(session('failed'))
-                    <div class="alert alert-danger">{{session('failed')}}</div>
-                @endif()
-                @if(session('success'))
-                    <div class="alert alert-success">{{session('success')}}</div>
-                @endif()
+                @include('errors.message')
                 <div class="row mt-5">
                     <div class="col-md-12">
                         <div class="card card-defualt">
