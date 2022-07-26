@@ -15,6 +15,6 @@ Route::prefix('admin')->group(function () {
     });
     Route::prefix('products')->group(function () {
         Route::get('create', [ProductsController::class, 'create'])->name('admin.products.create');
-        Route::post('', [ProductsController::class], 'store')->name('admin.products.store');
+        Route::post('', [ProductsController::class, 'store'])->name('admin.products.store');
     });
 });

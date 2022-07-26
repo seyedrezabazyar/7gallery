@@ -23,11 +23,14 @@
         <!-- Main content -->
         <div class="content">
             <div class="container-fluid">
+                @include('errors.message')
                 <div class="row mt-5">
                     <div class="col-md-12">
                         <div class="card card-defualt">
                             <!-- form start -->
-                            <form action="" method="post">
+                            <form action="{{route('admin.products.store')}}" method="post"
+                                  enctype="multipart/form-data">
+                                @csrf
                                 <div class="card-body">
                                     <div class="row">
                                         <div class="col-md-6">
@@ -41,9 +44,9 @@
                                             <div class="form-group">
                                                 <label>دسته بندی</label>
                                                 <select class="form-control" name="category_id">
-                                                    <option>کارت ویزیت</option>
-                                                    <option>تراکت</option>
-                                                    <option>بنر</option>
+                                                    @foreach($categories as $category)
+                                                        <option value="{{$category->id}}">{{$category->title}}</option>
+                                                    @endforeach
                                                 </select>
                                             </div>
                                         </div>
