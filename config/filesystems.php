@@ -36,10 +36,23 @@ return [
             'throw' => false,
         ],
 
+        'public_storage' => [
+            'driver' => 'local',
+            'root' => public_path(''),
+            'url' => env('APP_URL') . '/',
+            'visibility' => 'public',
+            'throw' => false,
+        ],
+
+        'local_storage' => [
+            'driver' => 'local',
+            'root' => storage_path('app/local_storage'),
+        ],
+
         'public' => [
             'driver' => 'local',
             'root' => storage_path('app/public'),
-            'url' => env('APP_URL').'/storage',
+            'url' => env('APP_URL') . '/storage',
             'visibility' => 'public',
             'throw' => false,
         ],

@@ -18,3 +18,7 @@ Route::prefix('admin')->group(function () {
         Route::post('', [ProductsController::class, 'store'])->name('admin.products.store');
     });
 });
+
+//Route::get('test', function () {
+//    dd(bcrypt('password'));
+//});
