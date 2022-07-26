@@ -7,9 +7,8 @@ use App\Http\Requests\Admin\Products\StoreRequest;
 use App\Models\Category;
 use App\Models\Product;
 use App\Models\User;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\File;
-use Illuminate\Support\Facades\Storage;
+use App\Utilities\ImageUploader;
+use mysql_xdevapi\Exception;
 
 class ProductsController extends Controller
 {
@@ -33,8 +32,32 @@ class ProductsController extends Controller
             'price' => $validatedData['price'],
             'owner_id' => $admin->id
         ]);
-        $path = 'products/' . $createdProduct->id . '/' . 'thumbnail_url_' . $validatedData['thumbnail_url']->getClientOriginalName();
-        Storage::disk('public_storage')->put($path, File::get($validatedData['thumbnail_url']));
-//        \ImageUploader::upload($validatedData['thumbnail_url']);
+
+        try {
+            $basePath = 'products/' . $createdProduct->id . '/';
+            $sourceImageFullPath = $basePath . 'source_url_' . $validatedData['source_url']->getClientOriginalName();
+
+            $images = [
+                'thumbnail_url' => $validatedData['thumbnail_url'],
+                'demo_url' => $validatedData['demo_url']
+            ];
+
+            $imagesPath = ImageUploader::uploadMany($images, $basePath);
+            ImageUploader::upload($validatedData['source_url'], $sourceImageFullPath, 'local_storage');
+
+            $updatedProduct = $createdProduct->update([
+                'thumbnail_url' => $imagesPath['thumbnail_url'],
+                'demo_url' => $imagesPath['demo_url'],
+                'source_url' => $sourceImageFullPath
+            ]);
+
+            if (!$updatedProduct) {
+                throw new Exception('تصاویر آپلود نشدند!');
+            }
+            return back()->with('success', 'محصول ایجاد شد.');
+
+        } catch (\Exception $e) {
+            return back()->with('failed', $e->getMessage());
+        }
     }
 }
