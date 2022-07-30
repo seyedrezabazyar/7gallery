@@ -14,6 +14,7 @@ Route::prefix('admin')->group(function () {
         Route::put('{category_id}/update', [CategoriesController::class, 'update'])->name('admin.categories.update');
     });
     Route::prefix('products')->group(function () {
+        Route::get('', [ProductsController::class, 'all'])->name('admin.products.all');
         Route::get('create', [ProductsController::class, 'create'])->name('admin.products.create');
         Route::post('', [ProductsController::class, 'store'])->name('admin.products.store');
     });
