@@ -65,7 +65,7 @@
                                             </td>
                                             <td>{{$product->category_id}}</td>
                                             <td>{{$product->owner_id}}</td>
-                                            <td>{{ substr($product->description,0,6) }}</td>
+                                            <td>{{$product->description}}</td>
                                             <td>
                                                 <a href="#" class="btn btn-default btn-icons" title="لینک دمو"><i
                                                         class="fa fa-link"></i></a>
