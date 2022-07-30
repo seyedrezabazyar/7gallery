@@ -10,7 +10,8 @@
                         <h1 class="m-0 text-dark">
                             <a class="nav-link drawer" data-widget="pushmenu" href="#"><i class="fa fa-bars"></i></a>
                             محصولات
-                            <a class="btn btn-primary float-left text-white py-2 px-4" href="products-add.php">افزودن
+                            <a class="btn btn-primary float-left text-white py-2 px-4"
+                               href="{{route('admin.products.create')}}">افزودن
                                 محصول جدید</a>
                         </h1>
                     </div><!-- /.col -->
@@ -63,9 +64,9 @@
                                                 <img src="dist/img/user6-128x128.jpg" class="product_img">
                                                 {{$product->title}}
                                             </td>
-                                            <td>{{$product->category_id}}</td>
-                                            <td>{{$product->owner_id}}</td>
-                                            <td>{{$product->description}}</td>
+                                            <td>{{$product->category->title}}</td>
+                                            <td>{{$product->owner->name}}</td>
+                                            <td>{!! substr($product->description,0,10) !!}</td>
                                             <td>
                                                 <a href="#" class="btn btn-default btn-icons" title="لینک دمو"><i
                                                         class="fa fa-link"></i></a>
