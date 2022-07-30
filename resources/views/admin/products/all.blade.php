@@ -61,18 +61,21 @@
                                         <tr>
                                             <td>{{$product->id}}</td>
                                             <td>
-                                                <img src="dist/img/user6-128x128.jpg" class="product_img">
+                                                <img src="/{{$product->thumbnail_url}}" class="product_img">
                                                 {{$product->title}}
                                             </td>
                                             <td>{{$product->category->title}}</td>
                                             <td>{{$product->owner->name}}</td>
-                                            <td>{!! substr($product->description,0,10) !!}</td>
+                                            <td>{!! mb_substr($product->description,0,10) !!}</td>
                                             <td>
-                                                <a href="#" class="btn btn-default btn-icons" title="لینک دمو"><i
+                                                <a href="{{route('admin.products.download.demo', $product->id)}}"
+                                                   class="btn btn-default btn-icons"
+                                                   title="لینک دمو"><i
                                                         class="fa fa-link"></i></a>
                                             </td>
                                             <td>
-                                                <a href="#" class="btn btn-default btn-icons" title="لینک دانلود"><i
+                                                <a href="{{route('admin.products.download.source', $product->id)}}"
+                                                   class="btn btn-default btn-icons" title="لینک دانلود"><i
                                                         class="fa fa-link"></i></a>
                                             </td>
                                             <td>{{$product->price}} تومان</td>

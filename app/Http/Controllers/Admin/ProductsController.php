@@ -66,4 +66,16 @@ class ProductsController extends Controller
             return back()->with('failed', $e->getMessage());
         }
     }
+
+    public function downloadDemo($product_id)
+    {
+        $product = Product::findOrFail($product_id);
+        return response()->download(public_path($product->demo_url));
+    }
+
+    public function downloadSource($product_id)
+    {
+        $product = Product::findOrFail($product_id);
+        return response()->download(storage_path('app/local_storage/' . $product->source_url));
+    }
 }
