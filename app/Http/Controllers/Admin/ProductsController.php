@@ -4,10 +4,12 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\Products\StoreRequest;
+use App\Http\Requests\Admin\Products\UpdateRequest;
 use App\Models\Category;
 use App\Models\Product;
 use App\Models\User;
 use App\Utilities\ImageUploader;
+use http\Env\Request;
 use mysql_xdevapi\Exception;
 
 class ProductsController extends Controller
@@ -38,7 +40,48 @@ class ProductsController extends Controller
             'price' => $validatedData['price'],
             'owner_id' => $admin->id
         ]);
+    }
 
+    public function edit($prodict_id)
+    {
+        $categories = Category::all();
+        $product = Product::findOrFail($prodict_id);
+        return view('admin.products.edit', compact('product', 'categories'));
+    }
+
+    public function update(UpdateRequest $request, $product_id)
+    {
+        $validatedDate = $request->validated();
+        $product = Product::findOrFail($product_id);
+        $updatedProduct = $product->update([
+            'title' => $validatedData['title'],
+            'description' => $validatedData['description'],
+            'category_id' => $validatedData['category_id'],
+            'price' => $validatedData['price'],
+        ]);
+    }
+
+    public function delete($product_id)
+    {
+        $product = Product::findOrFail($product_id);
+        $product->delete();
+        return back()->with('success', 'محصول حذف شد.');
+    }
+
+    public function downloadDemo($product_id)
+    {
+        $product = Product::findOrFail($product_id);
+        return response()->download(public_path($product->demo_url));
+    }
+
+    public function downloadSource($product_id)
+    {
+        $product = Product::findOrFail($product_id);
+        return response()->download(storage_path('app/local_storage/' . $product->source_url));
+    }
+
+    privdate function uploadImages($createdProduct, $validatedData)
+    {
         try {
             $basePath = 'products/' . $createdProduct->id . '/';
             $sourceImageFullPath = $basePath . 'source_url_' . $validatedData['source_url']->getClientOriginalName();
@@ -65,24 +108,5 @@ class ProductsController extends Controller
         } catch (\Exception $e) {
             return back()->with('failed', $e->getMessage());
         }
-    }
-
-    public function delete($product_id)
-    {
-        $product = Product::findOrFail($product_id);
-        $product->delete();
-        return back()->with('success', 'محصول حذف شد.');
-    }
-
-    public function downloadDemo($product_id)
-    {
-        $product = Product::findOrFail($product_id);
-        return response()->download(public_path($product->demo_url));
-    }
-
-    public function downloadSource($product_id)
-    {
-        $product = Product::findOrFail($product_id);
-        return response()->download(storage_path('app/local_storage/' . $product->source_url));
     }
 }
