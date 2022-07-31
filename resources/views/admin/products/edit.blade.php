@@ -29,9 +29,10 @@
                     <div class="col-md-12">
                         <div class="card card-defualt">
                             <!-- form start -->
-                            <form action="{{route('admin.products.store')}}" method="post"
+                            <form action="{{route('admin.products.update', $product->id)}}" method="post"
                                   enctype="multipart/form-data">
                                 @csrf
+                                @method('put')
                                 <div class="card-body">
                                     <div class="row">
                                         <div class="col-md-6">
