@@ -54,84 +54,27 @@
                                         <th>تاریخ عضویت</th>
                                         <th>عملیات</th>
                                     </tr>
-                                    <tr>
-                                        <td>۱۸۳</td>
-                                        <td>سیدرضا بازیار</td>
-                                        <td>mail@gmail.com</td>
-                                        <td>09171234567</td>
-                                        <td>کاربر عادی</td>
-                                        <td>۲۵ مرداد ۱۴۰۰</td>
-                                        <td>
-                                            <a href="#" class="btn btn-default btn-icons"><i class="fa fa-edit"></i></a>
-                                            <a href="#" class="btn btn-default btn-icons"><i
-                                                    class="fa fa-trash"></i></a>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>۱۸۳</td>
-                                        <td>سیدرضا بازیار</td>
-                                        <td>mail@gmail.com</td>
-                                        <td>09171234567</td>
-                                        <td>کاربر عادی</td>
-                                        <td>۲۵ مرداد ۱۴۰۰</td>
-                                        <td>
-                                            <a href="#" class="btn btn-default btn-icons"><i class="fa fa-edit"></i></a>
-                                            <a href="#" class="btn btn-default btn-icons"><i
-                                                    class="fa fa-trash"></i></a>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>۱۸۳</td>
-                                        <td>سیدرضا بازیار</td>
-                                        <td>mail@gmail.com</td>
-                                        <td>09171234567</td>
-                                        <td>کاربر عادی</td>
-                                        <td>۲۵ مرداد ۱۴۰۰</td>
-                                        <td>
-                                            <a href="#" class="btn btn-default btn-icons"><i class="fa fa-edit"></i></a>
-                                            <a href="#" class="btn btn-default btn-icons"><i
-                                                    class="fa fa-trash"></i></a>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>۱۸۳</td>
-                                        <td>سیدرضا بازیار</td>
-                                        <td>mail@gmail.com</td>
-                                        <td>09171234567</td>
-                                        <td>کاربر عادی</td>
-                                        <td>۲۵ مرداد ۱۴۰۰</td>
-                                        <td>
-                                            <a href="#" class="btn btn-default btn-icons"><i class="fa fa-edit"></i></a>
-                                            <a href="#" class="btn btn-default btn-icons"><i
-                                                    class="fa fa-trash"></i></a>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>۱۸۳</td>
-                                        <td>سیدرضا بازیار</td>
-                                        <td>mail@gmail.com</td>
-                                        <td>09171234567</td>
-                                        <td>کاربر عادی</td>
-                                        <td>۲۵ مرداد ۱۴۰۰</td>
-                                        <td>
-                                            <a href="#" class="btn btn-default btn-icons"><i class="fa fa-edit"></i></a>
-                                            <a href="#" class="btn btn-default btn-icons"><i
-                                                    class="fa fa-trash"></i></a>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>۱۸۳</td>
-                                        <td>سیدرضا بازیار</td>
-                                        <td>mail@gmail.com</td>
-                                        <td>09171234567</td>
-                                        <td>کاربر عادی</td>
-                                        <td>۲۵ مرداد ۱۴۰۰</td>
-                                        <td>
-                                            <a href="#" class="btn btn-default btn-icons"><i class="fa fa-edit"></i></a>
-                                            <a href="#" class="btn btn-default btn-icons"><i
-                                                    class="fa fa-trash"></i></a>
-                                        </td>
-                                    </tr>
+                                    @foreach($users as $user)
+                                        <tr>
+                                            <td>{{$user->id}}</td>
+                                            <td>{{$user->name}}</td>
+                                            <td>{{$user->email}}</td>
+                                            <td>{{$user->mobile}}</td>
+                                            <td>{{$user->role == 'admin' ? 'مدیر' : 'کاربر'}}</td>
+                                            <td>{{$user->created_at}}</td>
+                                            <td>
+                                                <a href="{{route('admin.users.edit', $user->id)}}"
+                                                   class="btn btn-default btn-icons"><i class="fa fa-edit"></i></a>
+                                                <form action="{{route('admin.users.delete', $user->id)}}" method="post"
+                                                      style="display: inline">
+                                                    @csrf
+                                                    @method('delete')
+                                                    <button type="submit" class="btn btn-default btn-icons"><i
+                                                            class="fa fa-trash"></i></button>
+                                                </form>
+                                            </td>
+                                        </tr>
+                                    @endforeach
                                     </tbody>
                                 </table>
                             </div>
@@ -139,13 +82,7 @@
                         </div>
                         <!-- /.card -->
                         <div class="d-flex justify-content-center">
-                            <ul class="pagination mt-3">
-                                <li class="page-item"><a class="page-link" href="#">«</a></li>
-                                <li class="page-item"><a class="page-link" href="#">۱</a></li>
-                                <li class="page-item"><a class="page-link" href="#">۲</a></li>
-                                <li class="page-item"><a class="page-link" href="#">۳</a></li>
-                                <li class="page-item"><a class="page-link" href="#">»</a></li>
-                            </ul>
+                            {{$users->links()}}
                         </div>
                     </div>
                 </div>
